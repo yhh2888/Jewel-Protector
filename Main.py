@@ -2,7 +2,7 @@ import jewel_box, hint, box_choice
 import random
 
 # 메인 루프
-
+ 
 
 gameStory = "1. 스토리 배경 (Story Background) \n\
    세계 최고의 보석 박물관 \'루브르 파리\'에 괴도 루팡의 예고장이 날아들었습니다. \n\
