@@ -40,7 +40,6 @@ while True:
 gameStorySetter(jewelNum)
 
 jewelBoxDict = jewel_box.choice(jewelNum)
-print(jewelBoxDict)
 jewelAliveDict = {}
 for keys in jewelBoxDict.keys():
     jewelAliveDict[keys] = True
