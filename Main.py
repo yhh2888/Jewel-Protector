@@ -3,6 +3,7 @@ import random
 
 # 메인 루프
  
+DEV_MOD = False
 
 gameStory = "1. 스토리 배경 (Story Background) \n\
    세계 최고의 보석 박물관 \'루브르 파리\'에 괴도 루팡의 예고장이 날아들었습니다. \n\
@@ -21,27 +22,33 @@ gameStory = "1. 스토리 배경 (Story Background) \n\
 \n\n\
 4. 승리 및 패배 조건 (Win/Lose Conditions) \n\
    - [승리] 탐정이 선택한 보석과 루팡이 노린 보석이 일치하면, 현장에서 루팡을 체포합니다. \n\
-   - [패배] 루팡을 잡지 못해 박물관의 모든 보석(N개)을 도난당하면 탐정의 패배입니다. "
+   - [패배] 루팡을 잡지 못해 박물관의 모든 보석(N개)을 도난당하면 탐정의 패배입니다. \n\
+\n\n\
+"
 
 print(gameStory)
-ThiefAlive = True
-jewelNum = int(input("플레이할 게임의 보석 수를 입력하세요. "))
 
-# jewelBoxDict = jewel_box.boxgenerator(jewelNum)
+MAX_TURNS = 5
+
+ThiefAlive = True
+jewelNum = int(input(f"플레이할 게임의 보석 수를 입력하세요. ({MAX_TURNS}~20개): "))
+
+jewelBoxDict = jewel_box.choice(jewelNum)
+jewelAliveDict = {}
+for keys in jewelBoxDict.keys():
+    jewelAliveDict[keys] = True
+
+stolenJewels = []
+turns = 0
+
 
 while ThiefAlive:
-    # ThiefBoxNum = box_choice(jewelBoxDict)
+    print(f'턴 수: {turns}턴')
+    print(f'훔친 보석 목록: {stolenJewels}')
+    jewelsLists, stolenJewels, ThiefAlive = box_choice.thiefSteal(DEV_MOD, list(jewelBoxDict), jewelAliveDict, stolenJewels, ThiefAlive)
+    turns += 1
+    if turns >= MAX_TURNS:
+        print(f'도둑이 승리하였습니다. 보석이 {turns}회 털렸습니다.\n')
 
-    # 현재 게임 보석함 딕셔너리 공개하기
-    # print(jewelbox.gonggae())
-
-    # 힌트 공개하기
-    # print(hint.hint(jewelBoxDict, ThiefBoxNum))
-
-    # chosenBoxNum = int(input("감시할 보관함을 선택하세요"))
-    # if chosenBoxNum == ThiefBoxNum:
-    #    print("괴도 루팡을 잡았습니다!")
-    #    ThiefAlive = False
-    # else:
-    #  print("보석을 지키지 못했습니다..")
-    pass
+    elif ThiefAlive == False:
+        print('체포 성공! 도둑이 잡혔습니다.\n')

@@ -11,28 +11,23 @@ def jewel_box():
     return jewels
 
 
-def choice():  
+def choice(count):  
     original_jewels = jewel_box()
     jewel_names = list(original_jewels.keys())
-    
-    count = int(input(f"보석의 수를 지정해주세요 (1~{len(jewel_names)}개): "))
     
     game_jewels = {}
     
     print("\n[ 지정된 보석 및 무게 정보 ]")
     print("-" * 35)
 
-    for i in range(count):
-        name = jewel_names[random.randint(0, len(jewel_names))]             
+    while count > 0:
+        name = jewel_names[random.randint(0, len(jewel_names)-1)]             
         weight = random.randint(1, 101)  
-        
-        game_jewels[name] = weight       
-        print(f"💎 {name} | 무게: {weight}g")
+        if name not in game_jewels:
+            game_jewels[name] = weight       
+            print(f"💎 {name} | 무게: {weight}g")
+            count -= 1
         
     print("-" * 35)
     
     return game_jewels
-
-
-final_jewels = choice()
-    

@@ -2,7 +2,7 @@ import jewel_box
 import random
 
 # jewel_box에서 받은 딕셔너리로 힌트를 만듭니다.
-
+"""
 def setCriminal():
 
  targetJewel = random.choice(jewel_box)
@@ -28,3 +28,4 @@ def detectiveGuess():
      
 playerGuess = detectiveGuess()
 
+"""
