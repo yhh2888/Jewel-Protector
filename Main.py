@@ -56,4 +56,5 @@ while ThiefAlive:
     if ThiefAlive == False:
         print('체포 성공! 도둑이 잡혔습니다.\n')
     elif turns >= MAX_TURNS:
-        print(f'도둑이 승리하였습니다. 보석이 {turns}회 털렸습니다.\n')
+        print(f'도둑이 승리하였습니다. 보석이 {turns-1}회 털렸습니다.\n')
+        ThiefAlive = False
