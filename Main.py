@@ -45,6 +45,8 @@ for keys in jewelBoxDict.keys():
 stolenJewels = []
 turns = 1
 
+ThiefAlive = True
+
 while ThiefAlive:
     print('\n'+'-'*45)
     print(f'턴 수: {turns}턴')
