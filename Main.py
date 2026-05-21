@@ -25,13 +25,13 @@ def gameStorySetter(jewelNum):
 - [승리] 탐정이 선택한 보석과 도둑이 노린 보석이 일치하면, 현장에서 도둑을 체포합니다. \n\
 - [패배] 루팡을 잡지 못해 박물관의 보석 {MAX_TURNS}개를 도난당하면 탐정의 패배입니다. \n\
    \n\n"
+   
     print(gameStory)
-    for _ in range(10):
-        time.sleep(1)
+    time.sleep(1)
 
 ThiefAlive = True
 while True:
-    jewelNum = int(input(f"플레이할 게임의 보석 수를 입력하세요. ({MAX_TURNS-1}~20개): "))
+    jewelNum = int(input(f"플레이할 게임의 보석 수를 입력하세요. ({MAX_TURNS-1}~50개): "))
     if (jewelNum < MAX_TURNS) or (jewelNum > 50):
         print(f"보석의 수는 {MAX_TURNS-1}~20개여야 합니다. 다시 입력하세요.")
     else:
@@ -40,6 +40,7 @@ while True:
 gameStorySetter(jewelNum)
 
 jewelBoxDict = jewel_box.choice(jewelNum)
+print(jewelBoxDict)
 jewelAliveDict = {}
 for keys in jewelBoxDict.keys():
     jewelAliveDict[keys] = True
@@ -49,8 +50,8 @@ turns = 1
 
 while ThiefAlive:
     print(f'턴 수: {turns}턴')
-    print(f'훔친 보석 목록: {stolenJewels}')
-    jewelsLists, stolenJewels, ThiefAlive = box_choice.thiefSteal(DEV_MOD, list(jewelBoxDict), jewelAliveDict, stolenJewels, ThiefAlive)
+    print(f'훔쳐진 보석 목록: {stolenJewels}')
+    jewelsLists, stolenJewels, ThiefAlive = box_choice.thiefSteal(DEV_MOD, jewelBoxDict, jewelAliveDict, stolenJewels, ThiefAlive)
     turns += 1
     if ThiefAlive == False:
         print('체포 성공! 도둑이 잡혔습니다.\n')

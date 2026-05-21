@@ -2,77 +2,49 @@
 # # 턴마다 훔치는 것 랜덤으로 지정하는 함수
 
 import random
-import hint
+from hint import *
 
-ThiefAlive = True
 
-jewels = {
+def thiefSteal(DEV_MOD, jewelsDict, jewelAliveDict, stolenJewels, ThiefAlive):
+    if ThiefAlive == True:
+
+        jewelsLists = list(jewelsDict.keys())
+
+        stoleJewel = random.choice(jewelsLists)
+        idx = jewelsLists.index(stoleJewel)
+        targetJewel = jewelsLists[idx]
+        stolenJewels.append(targetJewel)  
         
-        "diamond": True, "ruby": True, "sapphire": True, "emerald": True,
-        "amethyst": True, "topaz": True, "opal": True, "garnet": True,
-        "aquamarine": True, "peridot": True, "tanzanite": True, "turquoise": True,
-        "pearl": True, "amber": True, "jade": True, "spinel": True,
-        "moonstone": True, "citrine": True, "lapis_lazuli": True, "black_onyx": True,
-        "alexandrite": True, "tourmaline": True, "zircon": True, "morganite": True,
-        "kunzite": True, "sunstone": True, "bloodstone": True, "carnelian": True,
-        "malachite": True, "obsidian": True, "tiger_eye": True, "rose_quartz": True,
-        "smoky_quartz": True, "adularia": True, "agate": True, "jasper": True,
-        "hematite": True, "pyrite": True, "rhochrosite": True, "larimar": True,
-        "charoite": True, "sugilite": True, "chrysoberyl": True, "iolite": True,
-        "apatite": True, "fluorite": True, "labradorite": True, "amazonite": True,
-        "rhodonite": True, "aventurine": True
-    }
+        # 개발자 모드용 출력
+        if DEV_MOD == True:
+            print(targetJewel)
+            for keys in jewelsLists:
+                print(keys)
+                print(jewelAliveDict[keys], '\n')
+            for i in stolenJewels:
+                print(i)
+        
+        print("-"*45)
+        weightHint(jewelsDict[targetJewel], 50)
+        randLetterHint(stoleJewel)
+        print("-"*45)
 
-
-turn = 1
-chosenJewel = str
-jewelsLists = list(jewels.keys())
-stolenJewels = []
-
-while True:
-        if True not in jewels.values():
-            print('도둑이 승리하였습니다. 모든 보석이 털렸습니다.')
-            print("-" * 45)
-            print('패배!!!')
-            print("-" * 45)
-            break  
-
-        if ThiefAlive == True:
-            stoleJewel = random.choice(jewelsLists)
-            jewels[stoleJewel] = False 
-            print(f' [{turn}]째 턴에 도둑이 보석 하나를 훔쳐갔습니다.') 
-
-            idx = jewelsLists.index(stoleJewel)
-            targetJewel = jewelsLists.pop(idx)
-            stolenJewels.append(targetJewel)  
-
-            print("-" * 45)
-            hint.weightHint(50)                                          
-            hint.randLetterHint(stoleJewel)   
-            print("-" * 45)
-
-            while True:
-                userAnswer = input('이번 턴에 도둑이 훔친 보석을 추리하시오: ')
-                
-                if (userAnswer == targetJewel) or (userAnswer in jewelsLists):
-                    break 
-                else:
-                    print('목록에 없거나 오타입니다.')
-                    print("-" * 45)
-                break
-
-            if userAnswer == str(targetJewel):
-                 ThiefAlive = False
-                 print('체포 성공! 도둑이 잡혔습니다.')
-                 print("-" * 45)
-                 break
+        while True:
+            userAnswer = input('이번 턴에 도둑이 훔친 보석을 추리하시오: ')
+            if (userAnswer == targetJewel) or (userAnswer in jewelsLists):
+                break 
             else:
-                 print('틀렸습니다! 도둑이 다음 보석을 노립니다.')
-                 print("-" * 45)
-            print(f'턴 수: {turn}턴')
-            print(f'훔친 보석 목록: {sorted(stolenJewels)}')
-            print("-" * 45)    
-        turn += 1
+                print('목록에 없거나 오타입니다.\n')
+
+        if userAnswer == str(targetJewel):
+            ThiefAlive = False
+        else:
+            print("\n"+"-"*45)
+            print('틀렸습니다! 도둑이 다음 보석을 노립니다.\n')
+            print("-"*45)
+            jewelAliveDict[stoleJewel] = False 
+
+    return jewelsLists, stolenJewels, ThiefAlive
 
 
 # ThiefAlive = True
