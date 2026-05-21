@@ -2,11 +2,20 @@ import random  # 렌덤 무게를 쓰기 위해 꼭 필요해요!
 
 def jewel_box():
     jewels = {
+        
         "diamond": True, "ruby": True, "sapphire": True, "emerald": True,
         "amethyst": True, "topaz": True, "opal": True, "garnet": True,
         "aquamarine": True, "peridot": True, "tanzanite": True, "turquoise": True,
         "pearl": True, "amber": True, "jade": True, "spinel": True,
-        "moonstone": True, "citrine": True, "lapis_lazuli": True, "black_onyx": True
+        "moonstone": True, "citrine": True, "lapis_lazuli": True, "black_onyx": True,
+        "alexandrite": True, "tourmaline": True, "zircon": True, "morganite": True,
+        "kunzite": True, "sunstone": True, "bloodstone": True, "carnelian": True,
+        "malachite": True, "obsidian": True, "tiger_eye": True, "rose_quartz": True,
+        "smoky_quartz": True, "adularia": True, "agate": True, "jasper": True,
+        "hematite": True, "pyrite": True, "rhochrosite": True, "larimar": True,
+        "charoite": True, "sugilite": True, "chrysoberyl": True, "iolite": True,
+        "apatite": True, "fluorite": True, "labradorite": True, "amazonite": True,
+        "rhodonite": True, "aventurine": True
     }
     return jewels
 
