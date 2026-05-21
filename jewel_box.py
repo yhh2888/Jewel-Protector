@@ -26,17 +26,20 @@ def choice(count):
     
     game_jewels = {}
     
-    print("\n[ 지정된 보석 및 무게 정보 ]")
-    print("-" * 35)
-
     while count > 0:
         name = jewel_names[random.randint(0, len(jewel_names)-1)]             
         weight = random.randint(1, 101)  
         if name not in game_jewels:
-            game_jewels[name] = weight       
-            print(f"💎 {name} | 무게: {weight}g")
+            game_jewels[name] = weight
             count -= 1
-        
-    print("-" * 35)
+    
+    print("\n[ 지정된 보석 및 무게 정보 ]")
+    print("-" * 45)
+    listjewel = list(game_jewels.keys())
+    listjewel.sort()
+    for name in listjewel:
+        print(f"{name}: {game_jewels[name]}g")
+    print("-" * 45)
+    
     
     return game_jewels
