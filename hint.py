@@ -3,11 +3,11 @@ import random
 
 # jewel_box에서 받은 딕셔너리로 힌트를 만듭니다.
 
-def weightHint(weight : float) :
-    if int(game_jewels[stoleJewel]) < weight:
-        print(f'{stoleJewel}는 {weight}g 미만입니다.')
+def weightHint(jewel, weight : float) :
+    if int(jewel) < weight:
+        print(f'이번에 훔칠 보석은 {weight}g 미만입니다.')
     else :
-        print(f'{stoleJewel}는 {weight}g이상입니다.')
+        print(f'이번에 훔칠 보석은 {weight}g이상입니다.')
 
 def randLetterHint(name):
     hint = random.choice(name)
