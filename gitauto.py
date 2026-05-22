@@ -52,7 +52,7 @@ def setup_branch_by_user_name():
     print(f"\n--- {branch_name} 브랜치 생성 및 동기화 시작 ---")
 
     try:
-        # 로컬에 브랜치가 이미 있는지 확인
+        # 로컬에 브랜치가 이미 있는지 확인 
         if branch_name in repo.heads:
             print(f"이미 로컬에 '{branch_name}' 브랜치가 존재합니다.")
             branch = repo.heads[branch_name]
