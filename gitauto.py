@@ -1,5 +1,6 @@
 import os
 from git import Repo, GitCommandError
+from datetime import datetime
 
 # 1. 설정 경로
 REPO_PATH = os.getcwd()
@@ -43,11 +44,19 @@ def setup_branch_by_user_name():
 
     # 원격 최신화 및 메인 브랜치 이동
     origin = repo.remotes.origin
-    origin.fetch()
-    
+
     main_branch = 'main'
-    repo.git.checkout(main_branch)
-    origin.pull()
+    try:
+        repo.git.checkout(main_branch)
+    except GitCommandError:
+        # main 브랜치가 없으면 master 시도 (구 버전 저장소 대응)
+        main_branch = 'master'
+        repo.git.checkout(main_branch)
+
+    # 단순히 pull을 하기보다 fetch 후 원격 브랜치에 맞게 로컬을 강제 초기화(reset)합니다.
+    # 이는 'Divergent branches' 에러나 로컬의 불필요한 변경사항으로 인한 충돌을 방지합니다.
+    origin.fetch()
+    repo.git.reset('--hard', f'origin/{main_branch}')
 
     print(f"\n--- {branch_name} 브랜치 생성 및 동기화 시작 ---")
 
@@ -66,19 +75,33 @@ def setup_branch_by_user_name():
         
         # 테스트용 파일 수정 (user.name 사용)
         dummy_file = os.path.join(REPO_PATH, f"{user_name}_workspace.txt")
+        now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        
         with open(dummy_file, "w", encoding="utf-8") as f:
             f.write(f"This is a private workspace for {user_name}.\n")
+            f.write(f"Last updated: {now_str}\n")
         
         # 변경사항 스테이징 및 커밋
-        repo.index.add([dummy_file])
         if repo.is_dirty():
-            repo.index.commit(f"Initialize private workspace for {user_name}")
+            repo.index.add([dummy_file])
+            repo.index.commit(f"Update workspace for {user_name} at {now_str}")
             print("변경 사항 커밋 완료")
+
+        # 원격 저장소로 푸시 (업스트림 설정 추가)
+        print(f"원격 저장소로 푸시 중: {branch_name}...")
+        push_info = origin.push(refspec=f"{branch_name}:{branch_name}", set_upstream=True)
+        push_info.raise_if_error()
         
-        # 원격 저장소로 푸시 및 업스트림 설정
-        origin.push(refspec=f"{branch_name}:{branch_name}").raise_if_error()
-        print(f"원격 저장소({branch_name}) 푸시 성공!")
+        # 푸시 후 원격 상태를 로컬에 동기화하여 'git branch -a'에서 보이도록 함
+        origin.fetch()
         
+        print(f"✅ 원격 저장소({branch_name}) 푸시 성공!")
+        
+        # 브랜치 확인을 위한 URL 출력 (GitHub 기준)
+        if "github.com" in REMOTE_URL:
+            base_url = REMOTE_URL.replace(".git", "")
+            print(f"🔗 브랜치 확인 주소: {base_url}/tree/{branch_name}")
+            
     except GitCommandError as e:
         print(f"Git 작업 중 에러 발생: {e}")
         
